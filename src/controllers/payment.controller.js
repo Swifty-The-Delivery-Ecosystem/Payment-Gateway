@@ -4,19 +4,17 @@ const Razorpay = require('razorpay');
 exports.order = async(req,res,next) => {
     try {
 
-        const {user, amount} = req.body;
+        const {amount} = req.body;
         const instance = new Razorpay({
           key_id: process.env.RAZORPAY_KEY_ID, // RAZORPAY KEY
           key_secret: process.env.RAZORPAY_SECRET, // RAZORPAY SECRET
         });
-      
+
         const options = {
           amount,
           currency: 'INR',
-          user
           // receipt: shortid.generate(), // receit generaton has to be thought off
         };
-        
         const order = await instance.orders.create(options);
         if (!order) return res.status(500).send('Some error occured');
     
