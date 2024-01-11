@@ -1,5 +1,6 @@
 const PaymentDetails = require("../models/orderDetails");
 const Razorpay = require('razorpay');
+const Options = require('../models/options');
 
 exports.order = async(req,res,next) => {
     try {
@@ -10,12 +11,17 @@ exports.order = async(req,res,next) => {
           key_secret: process.env.RAZORPAY_SECRET, // RAZORPAY SECRET
         });
 
-        const options = {
+        const options = new Options({
           amount,
           currency: 'INR',
-          // receipt: shortid.generate(), // receit generaton has to be thought off
-        };
-        const order = await instance.orders.create(options);
+        });
+        options.save();
+        const opt = {
+          amount:options.amount,
+          currency:options.currency,
+          receipt:options._id
+        }
+        const order = await instance.orders.create(opt);
         if (!order) return res.status(500).send('Some error occured');
     
         res.json(order);
