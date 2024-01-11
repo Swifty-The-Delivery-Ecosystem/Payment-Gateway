@@ -4,7 +4,7 @@ const Options = require('../models/options');
 
 exports.order = async(req,res,next) => {
     try {
-
+        console.log(req.body);
         const {amount} = req.body;
         const instance = new Razorpay({
           key_id: process.env.RAZORPAY_KEY_ID, // RAZORPAY KEY
