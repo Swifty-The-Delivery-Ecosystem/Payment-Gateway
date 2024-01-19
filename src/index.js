@@ -12,6 +12,8 @@ if (NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
 
+
+
 app.use(express.json());
 
 app.get("/", (req, res) => {

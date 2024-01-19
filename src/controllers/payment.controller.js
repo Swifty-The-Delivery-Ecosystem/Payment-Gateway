@@ -4,7 +4,7 @@ const Options = require('../models/options');
 
 exports.order = async(req,res,next) => {
     try {
-
+      console.log("aaysuh")
         const {amount} = req.body;
         const instance = new Razorpay({
           key_id: process.env.RAZORPAY_KEY_ID, // RAZORPAY KEY
@@ -24,9 +24,9 @@ exports.order = async(req,res,next) => {
         const order = await instance.orders.create(opt);
         if (!order) return res.status(500).send('Some error occured');
     
-        res.json(order);
+        return res.status(200).json(order);
       } catch (error) {
-        res.status(500).send(error);
+        return res.status(500).send(error);
       }
 }
 
