@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require("mongoose");
+const cors = require('cors');
 require("dotenv").config();
 
 const { PORT, NODE_ENV, MONGODB_URI } = require("./config");
@@ -15,6 +16,13 @@ if (NODE_ENV === "development") {
 
 
 app.use(express.json());
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.get("/", (req, res) => {
     res.status(200).json({
