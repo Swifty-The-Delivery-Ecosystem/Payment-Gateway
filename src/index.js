@@ -1,11 +1,21 @@
 const express = require('express');
 const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require("cors");
 
 const { PORT, NODE_ENV, MONGODB_URI } = require("./config");
 const authRoutes = require("./routes/payment.route");
 
 const app = express();
+
+// app.use(bodyParser.json());
+app.use(
+  cors({
+    credentials: true,
+    origin: "*",
+    optionsSuccessStatus: 200,
+  })
+);
 
 if (NODE_ENV === "development") {
     const morgan = require("morgan");
