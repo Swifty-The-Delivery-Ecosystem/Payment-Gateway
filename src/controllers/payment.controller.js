@@ -7,11 +7,10 @@ const crypto = require("crypto");
 
 exports.order = async (req, res, next) => {
   try {
-    console.log("aaysuh");
     const { amount } = req.body;
     const instance = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID, // RAZORPAY KEY
-      key_secret: process.env.RAZORPAY_SECRET, // RAZORPAY SECRET
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_SECRET,
     });
 
     const options = new Options({
@@ -76,6 +75,8 @@ exports.success = async (req, res, next) => {
 
     await channel.assertExchange(exchangeName, "direct", {
       durable: true,
+      reconnect: true,
+      autoDelete: false,
     });
 
     await channel.publish(
